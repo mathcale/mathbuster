@@ -44,7 +44,7 @@ export class MoviesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.moviesService.findOne(+id);
+    return this.moviesService.findOne(id);
   }
 
   @Patch(':id')
