@@ -7,11 +7,14 @@ import {
   Param,
   Delete,
   Logger,
+  Query,
 } from '@nestjs/common';
 
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { ListMoviesFilterDto } from './dto/list-movies-filter.dto';
+import { PaginatedListMoviesDto } from './dto/paginated-list-movies.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -27,8 +30,16 @@ export class MoviesController {
   }
 
   @Get()
-  findAll() {
-    return this.moviesService.findAll();
+  findAll(
+    @Query() listMoviesFilterDto: ListMoviesFilterDto,
+  ): Promise<PaginatedListMoviesDto> {
+    listMoviesFilterDto.page = Number(listMoviesFilterDto.page || 1);
+    listMoviesFilterDto.limit = Number(listMoviesFilterDto.limit || 10);
+
+    return this.moviesService.findAll({
+      ...listMoviesFilterDto,
+      limit: listMoviesFilterDto.limit > 10 ? 10 : listMoviesFilterDto.limit,
+    });
   }
 
   @Get(':id')

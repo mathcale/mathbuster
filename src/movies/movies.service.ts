@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CreateMovieDto } from './dto/create-movie.dto';
+import { ListMoviesFilterDto } from './dto/list-movies-filter.dto';
+import { PaginatedListMoviesDto } from './dto/paginated-list-movies.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesRepository } from './movies.repository';
@@ -17,8 +19,26 @@ export class MoviesService {
     return await this.moviesRepository.createMovie(createMovieDto);
   }
 
-  findAll() {
-    return `This action returns all movies`;
+  async findAll(
+    listMoviesFilterDto: ListMoviesFilterDto,
+  ): Promise<PaginatedListMoviesDto> {
+    const skippedItems =
+      (listMoviesFilterDto.page - 1) * listMoviesFilterDto.limit;
+
+    const totalCount = await this.moviesRepository.count();
+    const products = await this.moviesRepository.find({
+      take: listMoviesFilterDto.limit,
+      skip: skippedItems,
+    });
+
+    const response: PaginatedListMoviesDto = {
+      totalCount,
+      page: listMoviesFilterDto.page,
+      limit: listMoviesFilterDto.limit,
+      data: products,
+    };
+
+    return response;
   }
 
   findOne(id: number) {
