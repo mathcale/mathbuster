@@ -1,10 +1,17 @@
 {
   "name": "mathbuster",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "An old-school movie rental app, built with modern tech for Digital Ocean's Hackathon",
+  "author": {
+    "name": "Matheus Calegaro",
+    "email": "hello@matheus.me",
+    "url": "https://matheus.me"
+  },
+  "engines": {
+    "node": ">=14"
+  },
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
