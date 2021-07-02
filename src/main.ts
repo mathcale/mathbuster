@@ -25,6 +25,7 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .addTag('movies', 'Describes the Movie resource')
+    .addTag('customers', 'Describes the Customer resource')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
