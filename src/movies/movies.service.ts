@@ -51,8 +51,17 @@ export class MoviesService {
     return found;
   }
 
-  update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `This action updates a #${id} movie`;
+  async update(
+    id: string,
+    updateMovieDto: UpdateMovieDto,
+  ): Promise<void | never> {
+    const found = await this.moviesRepository.findOne(id);
+
+    if (!found) {
+      throw new NotFoundException();
+    }
+
+    await this.moviesRepository.update(id, updateMovieDto);
   }
 
   remove(id: number) {
