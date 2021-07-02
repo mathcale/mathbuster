@@ -64,7 +64,8 @@ export class MoviesService {
     await this.moviesRepository.update(id, updateMovieDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} movie`;
+  async remove(id: string): Promise<void> {
+    await this.findOne(id);
+    await this.moviesRepository.delete(id);
   }
 }
