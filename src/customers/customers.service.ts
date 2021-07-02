@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CustomersRepository } from './customers.repository';
 
@@ -23,8 +23,34 @@ export class CustomersService {
     return `This action returns all customers`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findOne(id: string): Promise<Customer | never> {
+    const found = await this.customersRepository.findOne(id, {
+      select: [
+        'id',
+        'name',
+        'age',
+        'email',
+        'phone',
+        'favoriteGenres',
+        'address',
+        'complement',
+        'number',
+        'neighborhood',
+        'city',
+        'zipCode',
+        'state',
+        'country',
+        'enabled',
+        'createdAt',
+        'updatedAt',
+      ],
+    });
+
+    if (!found) {
+      throw new NotFoundException();
+    }
+
+    return found;
   }
 
   update(id: number, updateCustomerDto: UpdateCustomerDto) {
