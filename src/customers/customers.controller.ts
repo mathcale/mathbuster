@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
