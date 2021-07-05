@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2021-07-05T05:52:44.884Z
+__export_date: 2021-07-05T06:23:29.300Z
 __export_source: insomnia.desktop.app:v2021.4.0
 resources:
   - _id: req_24a5f46ff35b48b2a6ca0a70d805543e
@@ -455,11 +455,11 @@ resources:
     _type: environment
   - _id: env_4b2e384b8af94577bb475d7744770926
     parentId: env_508adc9f9ad9b4b5ce1032baca217d0d996383a9
-    modified: 1625464151065
+    modified: 1625466169903
     created: 1625464126239
     name: Production
     data:
-      baseUrl: https://mathbuster.matheus.me
+      baseUrl: https://api.mathbuster.matheus.me
     dataPropertyOrder:
       "&":
         - baseUrl
