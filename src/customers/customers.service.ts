@@ -85,8 +85,4 @@ export class CustomersService {
 
     await this.customersRepository.update(id, updateCustomerDto);
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
-  }
 }

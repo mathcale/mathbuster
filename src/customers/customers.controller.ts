@@ -88,9 +88,4 @@ export class CustomersController {
   ): Promise<void | never> {
     return this.customersService.update(id, updateCustomerDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customersService.remove(+id);
-  }
 }
