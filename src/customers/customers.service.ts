@@ -73,8 +73,17 @@ export class CustomersService {
     return found;
   }
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
+  async update(
+    id: string,
+    updateCustomerDto: UpdateCustomerDto,
+  ): Promise<void | never> {
+    const found = await this.customersRepository.findOne(id);
+
+    if (!found) {
+      throw new NotFoundException();
+    }
+
+    await this.customersRepository.update(id, updateCustomerDto);
   }
 
   remove(id: number) {

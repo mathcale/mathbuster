@@ -78,11 +78,15 @@ export class CustomersController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Edit specific customer' })
+  @ApiResponse({ status: 200, description: 'Customer successfully edited' })
+  @ApiResponse({ status: 404, description: 'Customer not found' })
+  @ApiResponse({ status: 500, description: 'Unexpected server error' })
   update(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
-  ) {
-    return this.customersService.update(+id, updateCustomerDto);
+  ): Promise<void | never> {
+    return this.customersService.update(id, updateCustomerDto);
   }
 
   @Delete(':id')
