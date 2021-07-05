@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CustomersRepository } from './customers.repository';
 
+import { CustomersRepository } from './customers.repository';
 import { CreateCustomerDto } from './dto/create-customer.dto';
+import { ListCustomersFilterDto } from './dto/list-customers-filter.dto';
+import { PaginatedListCustomersDto } from './dto/paginated-list-customers.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './entities/customer.entity';
 
@@ -19,8 +21,26 @@ export class CustomersService {
     return await this.customersRepository.createCustomer(createCustomerDto);
   }
 
-  findAll() {
-    return `This action returns all customers`;
+  async findAll(
+    listCustomersFilterDto: ListCustomersFilterDto,
+  ): Promise<any | never> {
+    const skippedItems =
+      (listCustomersFilterDto.page - 1) * listCustomersFilterDto.limit;
+
+    const totalCount = await this.customersRepository.count();
+    const products = await this.customersRepository.find({
+      take: listCustomersFilterDto.limit,
+      skip: skippedItems,
+    });
+
+    const response: PaginatedListCustomersDto = {
+      totalCount,
+      page: listCustomersFilterDto.page,
+      limit: listCustomersFilterDto.limit,
+      data: products,
+    };
+
+    return response;
   }
 
   async findOne(id: string): Promise<Customer | never> {

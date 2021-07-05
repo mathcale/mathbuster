@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { ListCustomersFilterDto } from './dto/list-customers-filter.dto';
+import { PaginatedListCustomersDto } from './dto/paginated-list-customers.dto';
 import { Customer } from './entities/customer.entity';
 
 @Controller('customers')
@@ -41,11 +44,35 @@ export class CustomersController {
   }
 
   @Get()
-  findAll() {
-    return this.customersService.findAll();
+  @ApiOperation({ summary: 'Lists all customers' })
+  @ApiQuery({ type: ListCustomersFilterDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Paginated list of customers',
+    type: PaginatedListCustomersDto,
+  })
+  @ApiResponse({ status: 500, description: 'Unexpected server error' })
+  findAll(
+    @Query() listCustomersFilterDto: ListCustomersFilterDto,
+  ): Promise<PaginatedListCustomersDto | never> {
+    listCustomersFilterDto.page = Number(listCustomersFilterDto.page || 1);
+    listCustomersFilterDto.limit = Number(listCustomersFilterDto.limit || 10);
+
+    return this.customersService.findAll({
+      ...listCustomersFilterDto,
+      limit:
+        listCustomersFilterDto.limit > 10 ? 10 : listCustomersFilterDto.limit,
+    });
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get customer by id' })
+  @ApiResponse({
+    status: 200,
+    description: 'The found customer',
+    type: Customer,
+  })
+  @ApiResponse({ status: 404, description: 'Customer not found' })
   findOne(@Param('id') id: string) {
     return this.customersService.findOne(id);
   }
