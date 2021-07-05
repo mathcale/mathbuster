@@ -1,7 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateRentalDto } from './dto/create-rental.dto';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { CreateRentalDto } from './dto/create-rental.dto';
+import { ListRentalsFilterDto } from './dto/list-rentals-filter.dto';
+import { PaginatedListRentalsDto } from './dto/paginated-list-rentals.dto';
 import { Rental } from './entities/rental.entity';
 import { RentalsService } from './rentals.service';
 
@@ -9,6 +11,27 @@ import { RentalsService } from './rentals.service';
 @ApiTags('rentals')
 export class RentalsController {
   constructor(private readonly rentalsService: RentalsService) {}
+
+  @Get()
+  @ApiOperation({ summary: 'Lists all rentals' })
+  @ApiQuery({ type: ListRentalsFilterDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Paginated list of rentals',
+    type: PaginatedListRentalsDto,
+  })
+  @ApiResponse({ status: 500, description: 'Unexpected server error' })
+  findAll(
+    @Query() listRentalsFilterDto: ListRentalsFilterDto,
+  ): Promise<PaginatedListRentalsDto | never> {
+    listRentalsFilterDto.page = Number(listRentalsFilterDto.page || 1);
+    listRentalsFilterDto.limit = Number(listRentalsFilterDto.limit || 10);
+
+    return this.rentalsService.findAll({
+      ...listRentalsFilterDto,
+      limit: listRentalsFilterDto.limit > 10 ? 10 : listRentalsFilterDto.limit,
+    });
+  }
 
   @Post()
   @ApiOperation({ summary: 'Creates a movie' })
