@@ -51,6 +51,16 @@ export class RentalsService {
     return response;
   }
 
+  async findOne(id: string): Promise<Rental | never> {
+    const found = await this.rentalsRepository.findOne(id);
+
+    if (!found) {
+      throw new NotFoundException();
+    }
+
+    return found;
+  }
+
   async create(createRentalDto: CreateRentalDto): Promise<Rental | never> {
     const { movieId, customerId } = createRentalDto;
 

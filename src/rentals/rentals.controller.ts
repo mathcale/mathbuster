@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { CreateRentalDto } from './dto/create-rental.dto';
@@ -31,6 +31,14 @@ export class RentalsController {
       ...listRentalsFilterDto,
       limit: listRentalsFilterDto.limit > 10 ? 10 : listRentalsFilterDto.limit,
     });
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get rental by id' })
+  @ApiResponse({ status: 200, description: 'The found rental', type: Rental })
+  @ApiResponse({ status: 404, description: 'Rental not found' })
+  findOne(@Param('id') id: string): Promise<Rental | never> {
+    return this.rentalsService.findOne(id);
   }
 
   @Post()
