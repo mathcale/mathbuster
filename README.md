@@ -4,36 +4,35 @@
     <img src=".github/img/logo.png" width="320" alt="Mathbuster" />
   </a>
 
-  <p align="center">An old-school movie rental app, built with modern tech for Digital Ocean's Hackathon</p>
+  <p align="center">An old-school movie rental app, built with modern tech for Digital Ocean's 2021 MongoDB Hackathon</p>
+
+  <p align="center">
+    <a href="https://insomnia.rest/run/?label=Mathbuster&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fmathcale%2Fmathbuster%2Fmain%2Fdocs%2Finsomnia-requests-collection.yaml" target="_blank">
+      <img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia">
+    </a>
+  </p>
 </p>
 
-## Running the app
+## Tech
+
+- [NestJS](https://nestjs.com/), on [DO App Platform](https://www.digitalocean.com/products/app-platform/)
+- MongoDB, on [DO Managed Databases](https://www.digitalocean.com/products/managed-databases-mongodb/)
+
+## Running the app locally
 
 ```bash
-# install dependencies
+# Install the correct Node version with nvm
+$ nvm install
+
+# Install dependencies with Yarn
 $ yarn
 
-# development
-$ yarn start
+# Create a .env file based on the example
+# Make sure to fill it with your MongoDB instance credentials
+cp .env.example .env
 
-# watch mode
+# Start the dev server!
 $ yarn start:dev
-
-# production mode
-$ yarn start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn test
-
-# e2e tests
-$ yarn test:e2e
-
-# test coverage
-$ yarn test:cov
 ```
 
 ## Stay in touch
