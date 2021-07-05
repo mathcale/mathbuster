@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { MoviesModule } from './movies/movies.module';
 import { CustomersModule } from './customers/customers.module';
+import { RentalsModule } from './rentals/rentals.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CustomersModule } from './customers/customers.module';
     }),
     MoviesModule,
     CustomersModule,
+    RentalsModule,
   ],
   controllers: [],
   providers: [],
