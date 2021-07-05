@@ -48,4 +48,15 @@ export class MoviesRepository extends Repository<Movie> {
     movie.availableCopies--;
     await this.save(movie);
   }
+
+  async incrementStock(movieId: string): Promise<void | never> {
+    const movie = await this.findOne(movieId);
+
+    if (!movie) {
+      throw new NotFoundException({ message: 'Movie not found!' });
+    }
+
+    movie.availableCopies++;
+    await this.save(movie);
+  }
 }

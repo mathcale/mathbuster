@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { CreateRentalDto } from './dto/create-rental.dto';
@@ -54,5 +62,14 @@ export class RentalsController {
   })
   create(@Body() createMovieDto: CreateRentalDto): Promise<Rental | never> {
     return this.rentalsService.create(createMovieDto);
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Returns a rented movie' })
+  @ApiResponse({ status: 200, description: 'Return successfully registered' })
+  @ApiResponse({ status: 404, description: 'Rental not found' })
+  @ApiResponse({ status: 500, description: 'Unexpected server error' })
+  returnMovie(@Param('id') id: string): Promise<void | void> {
+    return this.rentalsService.returnMovie(id);
   }
 }

@@ -93,4 +93,17 @@ export class RentalsService {
     this.logger.log('Renting movie to customer...');
     return await this.rentalsRepository.rentMovie(createRentalDto);
   }
+
+  async returnMovie(rentalId: string): Promise<void | never> {
+    this.logger.log('Loading rental data...');
+    const rental = await this.findOne(rentalId);
+
+    this.logger.log('Incrementing stock...');
+    await this.moviesRepository.incrementStock(rental.movieId);
+
+    this.logger.log('Setting rental as returned...');
+
+    rental.returned = true;
+    await this.rentalsRepository.save(rental);
+  }
 }
