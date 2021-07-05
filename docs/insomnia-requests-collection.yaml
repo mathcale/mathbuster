@@ -1,0 +1,469 @@
+_type: export
+__export_format: 4
+__export_date: 2021-07-05T05:52:44.884Z
+__export_source: insomnia.desktop.app:v2021.4.0
+resources:
+  - _id: req_24a5f46ff35b48b2a6ca0a70d805543e
+    parentId: fld_89d3055153d04b11b9f706bfca7717f5
+    modified: 1625201042138
+    created: 1625105380183
+    url: "{{ _.baseUrl }}/movies"
+    name: List movies
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_30acaa7387ef47aabab8033f1a21975c
+        name: page
+        value: "1"
+        description: ""
+        disabled: true
+      - id: pair_ed0849089a2a4024b46fe1b78fe06e76
+        name: limit
+        value: "10"
+        description: ""
+        disabled: true
+    headers: []
+    authentication: {}
+    metaSortKey: -1625105380183
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_89d3055153d04b11b9f706bfca7717f5
+    parentId: wrk_24ebca25c5f349c481fc55cbb6fc5523
+    modified: 1625199804122
+    created: 1625105372700
+    name: Movie
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1625105372801
+    _type: request_group
+  - _id: wrk_24ebca25c5f349c481fc55cbb6fc5523
+    parentId: null
+    modified: 1625105316066
+    created: 1625105316066
+    name: Mathbuster
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_0a5fd3fdeaec4098b8a8243a6f5260fb
+    parentId: fld_89d3055153d04b11b9f706bfca7717f5
+    modified: 1625462051229
+    created: 1625113237531
+    url: "{{ _.baseUrl }}/movies/60de80674d3e82212bc60817"
+    name: Get movie by id
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625105380158
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e3d77c5052fc45a29db4181cec1b7090
+    parentId: fld_89d3055153d04b11b9f706bfca7717f5
+    modified: 1625111819121
+    created: 1625110601236
+    url: "{{ _.baseUrl }}/movies"
+    name: Create movie
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"title": "Star Wars: Episode I - The Phantom Menace",
+        	"overview": "Anakin Skywalker, a young slave strong with the Force, is discovered on Tatooine. Meanwhile, the evil Sith have returned, enacting their plot for revenge against the Jedi.",
+        	"genres": ["Adventure", "Action", "Science Fiction"],
+        	"releaseDate": "1999-05-19",
+        	"isAdult": false,
+        	"availableCopies": 10
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_8293c0a03ec9439198580029984f8705
+    authentication: {}
+    metaSortKey: -1625105380133
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0fa75ddddda547dbabdada77bd80b5cb
+    parentId: fld_89d3055153d04b11b9f706bfca7717f5
+    modified: 1625194637724
+    created: 1625193086983
+    url: "{{ _.baseUrl }}/movies/60de80674d3e82212bc60817"
+    name: Update movie
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"enabled": true
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_8293c0a03ec9439198580029984f8705
+    authentication: {}
+    metaSortKey: -1624936701771
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9d456fb792ae46fa8ca5cc3ab7bfe492
+    parentId: fld_89d3055153d04b11b9f706bfca7717f5
+    modified: 1625194589367
+    created: 1625194387846
+    url: "{{ _.baseUrl }}/movies/60de80574d3e82212bc60816"
+    name: Delete movie
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624936701721
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ac7647d22daa4754b5380ef87a035d17
+    parentId: fld_80d23562865a4eb98711791ef9ac88c9
+    modified: 1625442686868
+    created: 1625441849846
+    url: "{{ _.baseUrl }}/customers"
+    name: List customers
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_25004160d7c049409ce8c9a51a2f1b0d
+        name: page
+        value: "1"
+        description: ""
+        disabled: true
+      - id: pair_ff4bbae85eaa4597993da01adb67350d
+        name: limit
+        value: "10"
+        description: ""
+        disabled: true
+    headers: []
+    authentication: {}
+    metaSortKey: -1625441849847
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_80d23562865a4eb98711791ef9ac88c9
+    parentId: wrk_24ebca25c5f349c481fc55cbb6fc5523
+    modified: 1625199801882
+    created: 1625199795942
+    name: Customer
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1625105372751
+    _type: request_group
+  - _id: req_014dbc5dc7db4a989e3d2e06f3a3d1c2
+    parentId: fld_80d23562865a4eb98711791ef9ac88c9
+    modified: 1625442681727
+    created: 1625201017091
+    url: "{{ _.baseUrl }}/customers/60de994895386a3d7baecbfd"
+    name: Get customer by id
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625201017091
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c6b6f0d7558241f29b92cfa380d0924e
+    parentId: fld_80d23562865a4eb98711791ef9ac88c9
+    modified: 1625456995247
+    created: 1625199816624
+    url: "{{ _.baseUrl }}/customers"
+    name: Create customer
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Sammy The Shark",
+        	"age": 26,
+        	"email": "sammy@digitalocean.com",
+        	"phone": "+5521912345678",
+        	"favoriteGenres": ["Adventure"],
+        	"address": "Av. General Osório",
+        	"number": "123",
+        	"neighborhood": "Ipanema",
+        	"city": "Rio de Janeiro",
+        	"zipCode": "12312312",
+        	"state": "RJ",
+        	"country": "BRA",
+        	"secret": "123456"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_56a26675bb4d4ee6ac45a27276dd820b
+    authentication: {}
+    metaSortKey: -1625199816624
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d2cd3cfc0425486a9143ff94404610db
+    parentId: fld_80d23562865a4eb98711791ef9ac88c9
+    modified: 1625457016985
+    created: 1625442757444
+    url: "{{ _.baseUrl }}/customers/60de994895386a3d7baecbfd"
+    name: Update movie
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"age": 27
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_5b1ec30845aa4fe3900b993b79b2b060
+    authentication: {}
+    metaSortKey: -1625199816574
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a6ea3f8e829546039bd110c00cde0591
+    parentId: fld_0cd47a9d08a840a882bd5f795866775b
+    modified: 1625459583044
+    created: 1625459560709
+    url: "{{ _.baseUrl }}/rentals"
+    name: List rentals
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_8456ae031fe04bb0b2022f21dc129901
+        name: page
+        value: "1"
+        description: ""
+        disabled: true
+      - id: pair_9674933684c8440bac5f219cd675f675
+        name: limit
+        value: "10"
+        description: ""
+        disabled: true
+    headers: []
+    authentication: {}
+    metaSortKey: -1625459560709
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0cd47a9d08a840a882bd5f795866775b
+    parentId: wrk_24ebca25c5f349c481fc55cbb6fc5523
+    modified: 1625456599820
+    created: 1625456591000
+    name: Rental
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1625105372701
+    _type: request_group
+  - _id: req_a6e2ad1915584bb1abec539566fa149e
+    parentId: fld_0cd47a9d08a840a882bd5f795866775b
+    modified: 1625460009862
+    created: 1625459622661
+    url: "{{ _.baseUrl }}/rentals/60e283b75cc3134a15803716"
+    name: Get rental by id
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_8456ae031fe04bb0b2022f21dc129901
+        name: page
+        value: "1"
+        description: ""
+        disabled: true
+      - id: pair_9674933684c8440bac5f219cd675f675
+        name: limit
+        value: "10"
+        description: ""
+        disabled: true
+    headers: []
+    authentication: {}
+    metaSortKey: -1625458087336
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d1227fe394964298957d84436160c24c
+    parentId: fld_0cd47a9d08a840a882bd5f795866775b
+    modified: 1625457420948
+    created: 1625456613963
+    url: "{{ _.baseUrl }}/rentals"
+    name: Rent movie to customer
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"customerId": "60de994895386a3d7baecbfd",
+        	"movieId": "60de80674d3e82212bc60817",
+        	"scheduledReturnDate": "{% customTimestamp 'add', '', '', '1', '', '', '', '', 'iso-8601', '', '' %}"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b12120b3f0024e61a30bca9536669deb
+    authentication: {}
+    metaSortKey: -1625456613963
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_82bbf83ac2984c67894a122540882036
+    parentId: fld_0cd47a9d08a840a882bd5f795866775b
+    modified: 1625460612128
+    created: 1625460554404
+    url: "{{ _.baseUrl }}/rentals/60e283b75cc3134a15803716"
+    name: Return movie
+    description: ""
+    method: PATCH
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625456613913
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_508adc9f9ad9b4b5ce1032baca217d0d996383a9
+    parentId: wrk_24ebca25c5f349c481fc55cbb6fc5523
+    modified: 1625105316189
+    created: 1625105316189
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1625105316189
+    _type: environment
+  - _id: jar_508adc9f9ad9b4b5ce1032baca217d0d996383a9
+    parentId: wrk_24ebca25c5f349c481fc55cbb6fc5523
+    modified: 1625105316195
+    created: 1625105316195
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_ece059eefff54e5abbe64eac705b67d8
+    parentId: wrk_24ebca25c5f349c481fc55cbb6fc5523
+    modified: 1625105316069
+    created: 1625105316069
+    fileName: Mathbuster
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_766a6436f7e44f798720608c0d091a55
+    parentId: env_508adc9f9ad9b4b5ce1032baca217d0d996383a9
+    modified: 1625105357765
+    created: 1625105323520
+    name: Local
+    data:
+      baseUrl: http://localhost:3000
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: "#2cce72"
+    isPrivate: false
+    metaSortKey: 1625105323520
+    _type: environment
+  - _id: env_4b2e384b8af94577bb475d7744770926
+    parentId: env_508adc9f9ad9b4b5ce1032baca217d0d996383a9
+    modified: 1625464151065
+    created: 1625464126239
+    name: Production
+    data:
+      baseUrl: https://mathbuster.matheus.me
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: "#b62b2b"
+    isPrivate: false
+    metaSortKey: 1625464126239
+    _type: environment
