@@ -1,4 +1,8 @@
-import { ConflictException } from '@nestjs/common';
+import {
+  ConflictException,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -26,5 +30,22 @@ export class MoviesRepository extends Repository<Movie> {
     } catch (err) {
       throw err.code && +err.code === 11000 ? new ConflictException() : err;
     }
+  }
+
+  async decrementStock(movieId: string): Promise<void | never> {
+    const movie = await this.findOne(movieId);
+
+    if (!movie) {
+      throw new NotFoundException({ message: 'Movie not found!' });
+    }
+
+    if (movie.availableCopies - 1 < 0) {
+      throw new UnprocessableEntityException({
+        message: 'This movie is out of stock',
+      });
+    }
+
+    movie.availableCopies--;
+    await this.save(movie);
   }
 }
