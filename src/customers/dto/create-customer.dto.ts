@@ -1,10 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
+import {
+  IsEmail,
+  IsInt,
+  IsNotEmpty,
+  Length,
+  Matches,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class CreateCustomerDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'Property "name" cannot be empty' })
   name: string;
+
+  @ApiProperty()
+  @IsNotEmpty({ message: 'Property "age" cannot be empty' })
+  @IsInt({ message: 'Property "age" must be an integer' })
+  @Min(10, { message: 'Minimun allowed age is 10' })
+  @Max(150, { message: 'Maximum allowed age is 150' })
+  age: number;
 
   @ApiProperty({ required: false })
   @IsEmail()
