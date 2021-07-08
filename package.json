@@ -14,7 +14,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "start": "lerna run start --stream"
+    "start": "lerna run dev --stream"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
