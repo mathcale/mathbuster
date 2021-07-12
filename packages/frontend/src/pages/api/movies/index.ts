@@ -4,7 +4,6 @@ import type { ListMoviesResponse } from '../../../typings/responses/ListMoviesRe
 const { API_URL } = process.env;
 const allowedPaginationLimits = [10, 25, 50];
 
-// FIXME: use correct type instead of `any`
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ListMoviesResponse | object>

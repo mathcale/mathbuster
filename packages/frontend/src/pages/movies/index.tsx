@@ -100,7 +100,6 @@ const useStyles2 = makeStyles({
 });
 
 export default function ListMoviesPage() {
-  // FIXME: use correct type
   const [data, setData] = useState<ListMoviesResponse | null>(null);
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
