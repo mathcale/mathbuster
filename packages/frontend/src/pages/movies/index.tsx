@@ -19,6 +19,9 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Chip from '@material-ui/core/Chip';
+import Typography from '@material-ui/core/Typography';
+
+import type { ListMoviesResponse } from '../../typings/responses/ListMoviesResponse';
 
 const useStyles1 = makeStyles((theme: Theme) =>
   createStyles({
@@ -98,7 +101,7 @@ const useStyles2 = makeStyles({
 
 export default function ListMoviesPage() {
   // FIXME: use correct type
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<ListMoviesResponse | null>(null);
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
 
@@ -146,7 +149,7 @@ export default function ListMoviesPage() {
       </Head>
 
       <Container>
-        <h1>Movies</h1>
+        <Typography variant="h3">Movies</Typography>
 
         {isLoading ? (
           <div>Loading...</div>
@@ -175,15 +178,17 @@ export default function ListMoviesPage() {
                 </TableHead>
 
                 <TableBody>
-                  {data.data.map(row => (
-                    <TableRow key={row.name}>
+                  {data!.data.map(row => (
+                    <TableRow key={row.id}>
                       <TableCell component="th" scope="row">
                         {row.title}
                       </TableCell>
 
                       <TableCell style={{ width: 160 }} align="center">
                         {row.genres.length > 0
-                          ? row.genres.map(genre => <Chip key={genre} label={genre} size="small" />)
+                          ? row.genres.map((genre: string) => (
+                              <Chip key={genre} label={genre} size="small" />
+                            ))
                           : '-'}
                       </TableCell>
 
@@ -203,7 +208,7 @@ export default function ListMoviesPage() {
                     </TableRow>
                   ))}
 
-                  {data.totalCount === 0 && (
+                  {data!.totalCount === 0 && (
                     <TableRow style={{ height: 53 * 1 }}>
                       <TableCell colSpan={6} />
                     </TableRow>
@@ -215,7 +220,7 @@ export default function ListMoviesPage() {
                     <TablePagination
                       rowsPerPageOptions={[10]}
                       colSpan={4}
-                      count={data.totalCount}
+                      count={data!.totalCount}
                       rowsPerPage={rowsPerPage}
                       page={page}
                       SelectProps={{
