@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { DataGrid, GridPageChangeParams } from '@material-ui/data-grid';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import type { ListMoviesResponse } from '../../typings/responses/ListMoviesResponse';
 
 export default function ListMoviesPage() {
+  const router = useRouter();
+
   const [page, setPage] = useState<number>(0);
   const [data, setData] = useState<ListMoviesResponse>({
     data: [],
@@ -48,6 +55,20 @@ export default function ListMoviesPage() {
     setPage(params.page);
   };
 
+  const onEditButtonPress = (id: string) => {
+    router.push(`/movies/${id}`);
+  };
+
+  const onDeleteButtonPress = async (id: string, title: string) => {
+    const canDelete = confirm(`Are you sure you want to delete "${title}"?`);
+
+    if (!canDelete) {
+      return false;
+    }
+
+    // TODO: implement
+  };
+
   return (
     <>
       <Head>
@@ -55,7 +76,20 @@ export default function ListMoviesPage() {
       </Head>
 
       <Container>
-        <Typography variant="h3">Movies</Typography>
+        <Box display="flex" flexDirection="row" alignItems="center">
+          <Typography variant="h3">Movies</Typography>
+
+          <Link href="/movies/create" passHref>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<AddIcon />}
+              style={{ marginTop: 5, marginLeft: 10 }}
+            >
+              Add
+            </Button>
+          </Link>
+        </Box>
 
         <DataGrid
           rows={data!.data}
@@ -67,13 +101,17 @@ export default function ListMoviesPage() {
               field: 'actions',
               headerName: 'Actions',
               flex: 1,
+              /* eslint-disable react/display-name */
               renderCell: params => (
                 <>
-                  <IconButton aria-label="edit">
+                  <IconButton onClick={() => onEditButtonPress(params.row.id)} aria-label="edit">
                     <EditIcon />
                   </IconButton>
 
-                  <IconButton aria-label="delete">
+                  <IconButton
+                    onClick={() => onDeleteButtonPress(params.row.id, params.row.title)}
+                    aria-label="delete"
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </>
