@@ -96,10 +96,11 @@ export default function ListMoviesPage() {
         <DataGrid
           rows={data!.data}
           columns={[
-            { field: 'title', headerName: 'Title', flex: 1 },
+            { field: 'title', headerName: 'Title', sortable: false, flex: 1 },
             {
               field: 'genres',
               headerName: 'Genres',
+              sortable: false,
               flex: 1,
               /* eslint-disable react/display-name */
               renderCell: params => (
@@ -110,10 +111,11 @@ export default function ListMoviesPage() {
                 </Stack>
               ),
             },
-            { field: 'availableCopies', headerName: 'Available copies', flex: 1 },
+            { field: 'availableCopies', headerName: 'Available copies', sortable: false, flex: 1 },
             {
               field: 'actions',
               headerName: 'Actions',
+              sortable: false,
               flex: 1,
               /* eslint-disable react/display-name */
               renderCell: params => (
@@ -140,6 +142,9 @@ export default function ListMoviesPage() {
           paginationMode="server"
           onPageChange={onPageChange}
           loading={isLoading}
+          disableSelectionOnClick
+          disableColumnFilter
+          disableColumnMenu
         />
       </Container>
     </>
