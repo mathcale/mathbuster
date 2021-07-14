@@ -67,4 +67,16 @@ export const MoviesService = {
 
     await response.json();
   },
+  delete: async (id: string): Promise<void | never> => {
+    const response = await fetch(`/api/movies/${id}/delete`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const { error }: { error: ApiErrorResponse } = await response.json();
+      console.log();
+
+      throw new ApiRequestError(error.statusCode, error.message, error?.error);
+    }
+  },
 };

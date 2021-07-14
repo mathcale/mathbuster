@@ -16,14 +16,22 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { green, red } from '@material-ui/core/colors';
+import Grid from '@material-ui/core/Grid';
+import Collapse from '@material-ui/core/Collapse';
+import Alert from '@material-ui/core/Alert';
+import AlertTitle from '@material-ui/core/AlertTitle';
+import CloseIcon from '@material-ui/icons/Close';
 
-import type { ListMoviesResponse } from '../../typings/responses/ListMoviesResponse';
 import { MoviesService } from '../../services';
+import { useSnackbar } from '../../hooks/useSnackbar';
+import type { ListMoviesResponse } from '../../typings/responses/ListMoviesResponse';
+import { ApiRequestError } from '../../errors';
 
 const DEFAULT_PAGE_LIMIT = 10;
 
 export default function ListMoviesPage() {
   const router = useRouter();
+  const { showSnackbarMessage } = useSnackbar();
 
   const [page, setPage] = useState<number>(0);
   const [data, setData] = useState<ListMoviesResponse>({
@@ -34,6 +42,7 @@ export default function ListMoviesPage() {
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [apiError, setApiError] = useState<ApiRequestError | null>(null);
 
   useEffect(() => {
     async function loadMovies() {
@@ -67,7 +76,19 @@ export default function ListMoviesPage() {
       return false;
     }
 
-    // TODO: implement
+    setApiError(null);
+
+    try {
+      await MoviesService.delete(id as string);
+
+      setPage(0);
+      showSnackbarMessage('Movie successfully deleted!');
+    } catch (err) {
+      console.error(err.message);
+      setApiError(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -91,6 +112,31 @@ export default function ListMoviesPage() {
             </Button>
           </Link>
         </Box>
+
+        <Grid container item md={12}>
+          <Collapse in={apiError !== null}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => setApiError(null)}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              <AlertTitle>Error</AlertTitle>
+              {apiError?.apiMessage
+                ? (apiError?.apiMessage as string[]).map((message, i) => <p key={i}>{message}</p>)
+                : apiError?.statusCode === 409
+                ? 'This movie already exists!'
+                : apiError?.error}
+            </Alert>
+          </Collapse>
+        </Grid>
 
         <DataGrid
           rows={data!.data}
