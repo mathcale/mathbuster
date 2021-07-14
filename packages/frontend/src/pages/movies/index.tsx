@@ -6,7 +6,9 @@ import { DataGrid, GridPageChangeParams } from '@material-ui/data-grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Stack from '@material-ui/core/Stack';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -95,7 +97,19 @@ export default function ListMoviesPage() {
           rows={data!.data}
           columns={[
             { field: 'title', headerName: 'Title', flex: 1 },
-            { field: 'genres', headerName: 'Genres', flex: 1 },
+            {
+              field: 'genres',
+              headerName: 'Genres',
+              flex: 1,
+              /* eslint-disable react/display-name */
+              renderCell: params => (
+                <Stack direction="row" spacing={1}>
+                  {(params.value! as string[]).map((genre, i) => (
+                    <Chip key={i} size="small" label={genre} />
+                  ))}
+                </Stack>
+              ),
+            },
             { field: 'availableCopies', headerName: 'Available copies', flex: 1 },
             {
               field: 'actions',
