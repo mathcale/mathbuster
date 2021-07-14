@@ -13,6 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
+import { green, red } from '@material-ui/core/colors';
 
 import type { ListMoviesResponse } from '../../typings/responses/ListMoviesResponse';
 
@@ -113,6 +116,22 @@ export default function ListMoviesPage() {
             },
             { field: 'availableCopies', headerName: 'Available copies', sortable: false, flex: 1 },
             {
+              field: 'enabled',
+              headerName: 'Enabled',
+              sortable: false,
+              flex: 1,
+              renderCell: params =>
+                params.value ? (
+                  <Chip
+                    size="small"
+                    label="Yes"
+                    icon={<CheckIcon style={{ color: green[300] }} />}
+                  />
+                ) : (
+                  <Chip size="small" label="No" icon={<CancelIcon style={{ color: red[300] }} />} />
+                ),
+            },
+            {
               field: 'actions',
               headerName: 'Actions',
               sortable: false,
@@ -128,7 +147,7 @@ export default function ListMoviesPage() {
                     onClick={() => onDeleteButtonPress(params.row.id, params.row.title)}
                     aria-label="delete"
                   >
-                    <DeleteIcon />
+                    <DeleteIcon style={{ color: red[300] }} />
                   </IconButton>
                 </>
               ),
