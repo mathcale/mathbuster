@@ -2,8 +2,11 @@ import React from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 
 import theme from '../theme';
+import { SnackbarProvider } from '../context/SnackbarProvider';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -24,8 +27,13 @@ export default function MyApp(props) {
       </Head>
 
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <CssBaseline />
+
+          <SnackbarProvider>
+            <Component {...pageProps} />
+          </SnackbarProvider>
+        </LocalizationProvider>
       </ThemeProvider>
     </React.Fragment>
   );
