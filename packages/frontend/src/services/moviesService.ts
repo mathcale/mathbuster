@@ -1,10 +1,22 @@
 import { ApiRequestError } from '../errors';
 import type { Movie } from '../typings/entities/Movie';
+import type { ListMoviesResponse } from '../typings/responses/ListMoviesResponse';
 import type { CreateMovieRequest } from '../typings/requests/CreateMovieRequest';
-import { EditMovieRequest } from '../typings/requests/EditMovieRequest';
+import type { EditMovieRequest } from '../typings/requests/EditMovieRequest';
 import type { ApiErrorResponse } from '../typings/responses/ApiErrorResponse';
 
 export const MoviesService = {
+  findAll: async (page: number, limit: number = 10): Promise<ListMoviesResponse | never> => {
+    const response = await fetch(`/api/movies?page=${page + 1}&limit=${limit}`);
+
+    if (!response.ok) {
+      const { error }: { error: ApiErrorResponse } = await response.json();
+      throw new ApiRequestError(error.statusCode, error.message, error?.error);
+    }
+
+    const pageResponse: ListMoviesResponse = await response.json();
+    return pageResponse;
+  },
   findOne: async (id: string): Promise<Movie | never> => {
     const response = await fetch(`/api/movies/${id}`);
 

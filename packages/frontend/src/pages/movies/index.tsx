@@ -18,6 +18,9 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { green, red } from '@material-ui/core/colors';
 
 import type { ListMoviesResponse } from '../../typings/responses/ListMoviesResponse';
+import { MoviesService } from '../../services';
+
+const DEFAULT_PAGE_LIMIT = 10;
 
 export default function ListMoviesPage() {
   const router = useRouter();
@@ -26,7 +29,7 @@ export default function ListMoviesPage() {
   const [data, setData] = useState<ListMoviesResponse>({
     data: [],
     page: 1,
-    limit: 10,
+    limit: DEFAULT_PAGE_LIMIT,
     totalCount: 0,
   });
 
@@ -37,14 +40,7 @@ export default function ListMoviesPage() {
       setIsLoading(true);
 
       try {
-        const response = await fetch(`/api/movies?page=${page + 1}&limit=10`);
-
-        if (!response.ok) {
-          const errorResponse = await response.json();
-          throw new Error(errorResponse);
-        }
-
-        const pageResponse = await response.json();
+        const pageResponse = await MoviesService.findAll(page, DEFAULT_PAGE_LIMIT);
         setData(pageResponse);
       } catch (err) {
         console.error('[ERROR] ListMoviesPage.loadMovies:', err);
