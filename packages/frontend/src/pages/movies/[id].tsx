@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/styles';
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
@@ -15,11 +17,11 @@ import Button from '@material-ui/core/Button';
 import DatePicker from '@material-ui/lab/DatePicker';
 import Grid from '@material-ui/core/Grid';
 import Stack from '@material-ui/core/Stack';
-import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/core/Alert';
 import AlertTitle from '@material-ui/core/AlertTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Collapse from '@material-ui/core/Collapse';
 
 import { MoviesService } from '../../services';
@@ -140,7 +142,20 @@ export default function CreateMoviePage() {
       </Head>
 
       <Container>
-        <Typography variant="h3">Edit movie</Typography>
+        <Box display="flex" flexDirection="row" alignItems="center">
+          <Typography variant="h3">Edit movie</Typography>
+
+          <Link href="/movies" passHref>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<ArrowBackIcon />}
+              style={{ marginTop: 5, marginLeft: 10 }}
+            >
+              Go back
+            </Button>
+          </Link>
+        </Box>
 
         <Grid container>
           <Grid item md={12}>
