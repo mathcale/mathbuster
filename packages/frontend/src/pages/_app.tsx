@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,7 @@ import theme from '../theme';
 export default function MyApp(props) {
   const { Component, pageProps } = props;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
 
     if (jssStyles) {
@@ -21,7 +21,7 @@ export default function MyApp(props) {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>Mathbuster</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -38,6 +38,6 @@ export default function MyApp(props) {
           </SnackbarProvider>
         </LocalizationProvider>
       </ThemeProvider>
-    </React.Fragment>
+    </>
   );
 }
