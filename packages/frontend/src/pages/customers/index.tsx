@@ -67,16 +67,15 @@ export default function ListCustomersPage() {
       </Head>
 
       <Container>
-        <Box display="flex" flexDirection="row" alignItems="center">
-          <Typography variant="h3">Customers</Typography>
-
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          marginTop="16px"
+          marginBottom="16px"
+        >
           <Link href="/customers/create" passHref>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<AddIcon />}
-              style={{ marginTop: 5, marginLeft: 10 }}
-            >
+            <Button variant="outlined" size="small" startIcon={<AddIcon />}>
               Add
             </Button>
           </Link>

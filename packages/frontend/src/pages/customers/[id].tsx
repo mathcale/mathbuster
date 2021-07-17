@@ -164,16 +164,15 @@ export default function CreateCustomerPage() {
       </Head>
 
       <Container>
-        <Box display="flex" flexDirection="row" alignItems="center">
-          <Typography variant="h3">Edit customer</Typography>
-
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          marginTop="16px"
+          marginBottom="16px"
+        >
           <Link href="/customers" passHref>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<ArrowBackIcon />}
-              style={{ marginTop: 5, marginLeft: 10 }}
-            >
+            <Button variant="outlined" size="small" startIcon={<ArrowBackIcon />}>
               Go back
             </Button>
           </Link>

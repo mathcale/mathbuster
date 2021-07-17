@@ -98,17 +98,16 @@ export default function ListMoviesPage() {
       </Head>
 
       <Container>
-        <Box display="flex" flexDirection="row" alignItems="center">
-          <Typography variant="h3">Movies</Typography>
-
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          marginTop="16px"
+          marginBottom="16px"
+        >
           <Link href="/movies/create" passHref>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<AddIcon />}
-              style={{ marginTop: 5, marginLeft: 10 }}
-            >
-              Add
+            <Button variant="outlined" size="small" startIcon={<AddIcon />}>
+              Add movie
             </Button>
           </Link>
         </Box>

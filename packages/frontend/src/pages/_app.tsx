@@ -5,8 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 
-import theme from '../theme';
+import { AppLayout } from '../layouts';
 import { SnackbarProvider } from '../context/SnackbarProvider';
+import theme from '../theme';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -31,7 +32,9 @@ export default function MyApp(props) {
           <CssBaseline />
 
           <SnackbarProvider>
-            <Component {...pageProps} />
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
           </SnackbarProvider>
         </LocalizationProvider>
       </ThemeProvider>

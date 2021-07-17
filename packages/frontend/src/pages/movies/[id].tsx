@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import Radio from '@material-ui/core/Radio';
@@ -142,16 +141,15 @@ export default function CreateMoviePage() {
       </Head>
 
       <Container>
-        <Box display="flex" flexDirection="row" alignItems="center">
-          <Typography variant="h3">Edit movie</Typography>
-
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          marginTop="16px"
+          marginBottom="16px"
+        >
           <Link href="/movies" passHref>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<ArrowBackIcon />}
-              style={{ marginTop: 5, marginLeft: 10 }}
-            >
+            <Button variant="outlined" size="small" startIcon={<ArrowBackIcon />}>
               Go back
             </Button>
           </Link>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { makeStyles } from '@material-ui/styles';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import Radio from '@material-ui/core/Radio';
@@ -20,6 +21,7 @@ import AlertTitle from '@material-ui/core/AlertTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Collapse from '@material-ui/core/Collapse';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { MoviesService } from '../../services';
 import { useSnackbar } from '../../hooks/useSnackbar';
@@ -113,7 +115,19 @@ export default function CreateMoviePage() {
       </Head>
 
       <Container>
-        <Typography variant="h3">Add movie</Typography>
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          marginTop="16px"
+          marginBottom="16px"
+        >
+          <Link href="/movies" passHref>
+            <Button variant="outlined" size="small" startIcon={<ArrowBackIcon />}>
+              Go back
+            </Button>
+          </Link>
+        </Box>
 
         <Grid container>
           <Grid item md={12}>
