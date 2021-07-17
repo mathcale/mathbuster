@@ -12,4 +12,5 @@ export interface EditCustomerRequest {
   zipCode?: string;
   state?: string;
   country?: string;
+  enabled?: boolean;
 }

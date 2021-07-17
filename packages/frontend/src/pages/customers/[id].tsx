@@ -14,7 +14,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
-import DatePicker from '@material-ui/lab/DatePicker';
 import Grid from '@material-ui/core/Grid';
 import Stack from '@material-ui/core/Stack';
 import Alert from '@material-ui/core/Alert';
@@ -24,10 +23,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Collapse from '@material-ui/core/Collapse';
 
-import { MoviesService } from '../../services';
+import { CustomersService } from '../../services';
 import { useSnackbar } from '../../hooks/useSnackbar';
 import { ApiRequestError } from '../../errors';
-import type { EditMovieRequest } from '../../typings/requests/EditMovieRequest';
+import type { EditCustomerRequest } from '../../typings/requests/EditCustomerRequest';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,41 +46,57 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     // @ts-ignore
-    margin: theme.spacing(3),
+    marginTop: theme.spacing(2),
+    // @ts-ignore
+    marginBottom: theme.spacing(1),
   },
 }));
 
-export default function CreateMoviePage() {
+export default function CreateCustomerPage() {
   const classes = useStyles();
   const router = useRouter();
   const { showSnackbarMessage } = useSnackbar();
+
   const { id } = router.query;
 
-  const [title, setTitle] = useState<string>('');
-  const [overview, setOverview] = useState<string>('');
-  const [genres, setGenres] = useState<string[]>([]);
-  const [releaseDate, setReleaseDate] = useState<string>('');
-  const [isAdult, setIsAdult] = useState<string>('');
-  const [availableCopies, setAvailableCopies] = useState<number | null>(null);
+  const [name, setName] = useState<string>('');
+  const [age, setAge] = useState<number>(0);
+  const [email, setEmail] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [favoriteGenres, setFavoriteGenres] = useState<string[]>([]);
+  const [address, setAddress] = useState<string>('');
+  const [complement, setComplement] = useState<string>('');
+  const [number, setNumber] = useState<string>('');
+  const [neighborhood, setNeighborhood] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [zipCode, setZipCode] = useState<string>('');
+  const [state, setState] = useState<string>('');
+  const [country, setCountry] = useState<string>('');
   const [enabled, setEnabled] = useState<string>('');
 
   const [genre, setGenre] = useState<string>('');
-  const [checkboxError, setCheckboxError] = useState<boolean>(false);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [apiError, setApiError] = useState<ApiRequestError | null>(null);
 
   useEffect(() => {
-    async function loadMovie() {
+    async function loadCustomer() {
       try {
-        const response = await MoviesService.findOne(id as string);
+        const response = await CustomersService.findOne(id as string);
 
-        setTitle(response.title);
-        setOverview(response.overview);
-        setGenres(response.genres);
-        setReleaseDate(response.releaseDate);
-        setIsAdult(response.isAdult.toString());
-        setAvailableCopies(response.availableCopies);
+        setName(response.name);
+        setAge(response.age);
+        setEmail(response.email || '');
+        setPhone(response.phone);
+        setFavoriteGenres(response.favoriteGenres || []);
+        setAddress(response.address);
+        setComplement(response.complement || '');
+        setNumber(response.number);
+        setNeighborhood(response.neighborhood);
+        setCity(response.city);
+        setZipCode(response.zipCode);
+        setState(response.state);
+        setCountry(response.country);
         setEnabled(response.enabled.toString());
       } catch (err) {
         console.error(err.message);
@@ -91,21 +106,21 @@ export default function CreateMoviePage() {
       }
     }
 
-    loadMovie();
+    loadCustomer();
   }, []);
 
   const addGenre = (newGenre: string): void => {
-    if (genres.length >= 4 || genres.find(genre => genre === newGenre)) {
+    if (favoriteGenres.length >= 4 || favoriteGenres.find(genre => genre === newGenre)) {
       return;
     }
 
-    setGenres([...genres, newGenre]);
+    setFavoriteGenres([...favoriteGenres, newGenre]);
     setGenre('');
   };
 
   const removeGenre = (genre: string): void => {
-    const updatedGenres = genres.filter(g => g !== genre);
-    setGenres(updatedGenres);
+    const updatedGenres = favoriteGenres.filter(g => g !== genre);
+    setFavoriteGenres(updatedGenres);
   };
 
   const onFormSubmit = async (): Promise<void> => {
@@ -113,20 +128,27 @@ export default function CreateMoviePage() {
     setApiError(null);
 
     try {
-      const requestBody: EditMovieRequest = {
-        title,
-        overview,
-        genres,
-        releaseDate,
-        isAdult: isAdult === 'true',
-        availableCopies: availableCopies!,
+      const requestBody: EditCustomerRequest = {
+        name,
+        age,
+        email,
+        phone,
+        favoriteGenres,
+        address,
+        complement,
+        number,
+        neighborhood,
+        city,
+        zipCode,
+        state,
+        country,
         enabled: enabled === 'true',
       };
 
-      await MoviesService.update(id as string, requestBody);
-      showSnackbarMessage('Movie successfully edited!');
+      await CustomersService.update(id as string, requestBody);
+      showSnackbarMessage('Customer successfully updated!');
 
-      router.push('/movies');
+      router.push('/customers');
     } catch (err) {
       console.error(err.message);
       setApiError(err);
@@ -138,14 +160,14 @@ export default function CreateMoviePage() {
   return (
     <>
       <Head>
-        <title>Edit movie :: Mathbuster</title>
+        <title>Edit customer :: Mathbuster</title>
       </Head>
 
       <Container>
         <Box display="flex" flexDirection="row" alignItems="center">
-          <Typography variant="h3">Edit movie</Typography>
+          <Typography variant="h3">Edit customer</Typography>
 
-          <Link href="/movies" passHref>
+          <Link href="/customers" passHref>
             <Button
               variant="outlined"
               size="small"
@@ -180,40 +202,68 @@ export default function CreateMoviePage() {
           </Grid>
 
           <form noValidate autoComplete="off" className={classes.form}>
-            <Grid item md={12}>
-              <TextField
-                name="title"
-                label="Title"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-                required
-                variant="standard"
-                fullWidth
-                margin="normal"
-                disabled={isLoading}
-              />
+            <Grid container spacing={2}>
+              <Grid item md={3}>
+                <TextField
+                  name="name"
+                  label="Name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  disabled={isLoading}
+                />
+              </Grid>
+
+              <Grid item md={3}>
+                <TextField
+                  name="age"
+                  label="Age"
+                  value={age}
+                  onChange={e => setAge(+e.target.value)}
+                  required
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  disabled={isLoading}
+                  inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                />
+              </Grid>
+
+              <Grid item md={3}>
+                <TextField
+                  name="phone"
+                  label="Phone"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  required
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  disabled={isLoading}
+                />
+              </Grid>
+
+              <Grid item md={3}>
+                <TextField
+                  name="email"
+                  label="Email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  disabled={isLoading}
+                />
+              </Grid>
             </Grid>
 
             <Grid item md={12}>
               <TextField
-                name="overview"
-                label="Overview"
-                multiline
-                minRows={3}
-                value={overview}
-                onChange={e => setOverview(e.target.value)}
-                required
-                variant="standard"
-                fullWidth
-                margin="normal"
-                disabled={isLoading}
-              />
-            </Grid>
-
-            <Grid item md={12}>
-              <TextField
-                name="genres"
-                label="Genres"
+                name="favoriteGenres"
+                label="Favorite genres"
                 value={genre}
                 onChange={e => setGenre(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && addGenre(genre)}
@@ -222,10 +272,11 @@ export default function CreateMoviePage() {
                 fullWidth
                 margin="normal"
                 disabled={isLoading}
+                helperText="Type a genre and press Enter to add"
               />
 
               <Stack direction="row" spacing={1}>
-                {genres.map((genre, i) => (
+                {favoriteGenres.map((genre, i) => (
                   <Chip
                     key={i}
                     label={genre}
@@ -237,95 +288,143 @@ export default function CreateMoviePage() {
             </Grid>
 
             <Grid container spacing={2}>
+              <Grid item md={6}>
+                <TextField
+                  name="address"
+                  label="Address"
+                  value={address}
+                  onChange={e => setAddress(e.target.value)}
+                  required
+                  variant="standard"
+                  margin="normal"
+                  fullWidth
+                  disabled={isLoading}
+                />
+              </Grid>
+
+              <Grid item md={4}>
+                <TextField
+                  name="complement"
+                  label="Complement"
+                  value={complement}
+                  onChange={e => setComplement(e.target.value)}
+                  variant="standard"
+                  margin="normal"
+                  fullWidth
+                  disabled={isLoading}
+                />
+              </Grid>
+
+              <Grid item md={2}>
+                <TextField
+                  name="number"
+                  label="Number"
+                  value={number}
+                  onChange={e => setNumber(e.target.value)}
+                  required
+                  variant="standard"
+                  margin="normal"
+                  fullWidth
+                  disabled={isLoading}
+                />
+              </Grid>
+            </Grid>
+
+            <Grid container spacing={2}>
               <Grid item md={3}>
-                <DatePicker
-                  disableFuture
-                  label="Release date"
-                  value={releaseDate}
-                  onChange={newValue => {
-                    if (!newValue) return;
-                    setReleaseDate((newValue! as unknown as Date).toISOString().split('T')[0]);
-                  }}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      name="releaseDate"
-                      margin="normal"
-                      variant="standard"
-                      required
-                      fullWidth
-                      disabled={isLoading}
-                    />
-                  )}
+                <TextField
+                  name="neighborhood"
+                  label="Neighborhood"
+                  value={neighborhood}
+                  onChange={e => setNeighborhood(e.target.value)}
+                  required
+                  variant="standard"
+                  margin="normal"
+                  fullWidth
+                  disabled={isLoading}
                 />
               </Grid>
 
               <Grid item md={3}>
                 <TextField
-                  name="availableCopies"
-                  label="Available copies"
-                  value={availableCopies}
-                  onChange={e => setAvailableCopies(+e.target.value)}
-                  required
+                  name="city"
+                  label="City"
+                  value={city}
+                  onChange={e => setCity(e.target.value)}
                   variant="standard"
                   margin="normal"
-                  inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                   fullWidth
                   disabled={isLoading}
                 />
               </Grid>
 
-              <Grid item md={3}>
-                <FormControl
-                  component="fieldset"
-                  error={checkboxError}
-                  className={classes.formControl}
+              <Grid item md={2}>
+                <TextField
+                  name="zipCode"
+                  label="Zip code"
+                  value={zipCode}
+                  onChange={e => setZipCode(e.target.value)}
                   required
+                  variant="standard"
+                  margin="normal"
                   fullWidth
                   disabled={isLoading}
-                >
-                  <FormLabel component="legend">Is adult?</FormLabel>
-
-                  <RadioGroup
-                    aria-label="isAdult"
-                    name="isAdult"
-                    row
-                    value={isAdult}
-                    onChange={e => {
-                      setIsAdult(e.target.value);
-                      setCheckboxError(false);
-                    }}
-                  >
-                    <FormControlLabel value="true" control={<Radio />} label="Yes" />
-                    <FormControlLabel value="false" control={<Radio />} label="No" />
-                  </RadioGroup>
-                </FormControl>
+                />
               </Grid>
 
-              <Grid item md={3}>
-                <FormControl
-                  component="fieldset"
-                  className={classes.formControl}
+              <Grid item md={2}>
+                <TextField
+                  name="state"
+                  label="State"
+                  value={state}
+                  onChange={e => setState(e.target.value)}
                   required
+                  variant="standard"
+                  margin="normal"
                   fullWidth
                   disabled={isLoading}
-                >
-                  <FormLabel component="legend">Enabled</FormLabel>
-
-                  <RadioGroup
-                    aria-label="enabled"
-                    name="enabled"
-                    row
-                    value={enabled}
-                    onChange={e => {
-                      setEnabled(e.target.value);
-                    }}
-                  >
-                    <FormControlLabel value="true" control={<Radio />} label="Yes" />
-                    <FormControlLabel value="false" control={<Radio />} label="No" />
-                  </RadioGroup>
-                </FormControl>
+                />
               </Grid>
+
+              <Grid item md={2}>
+                <TextField
+                  name="country"
+                  label="Country"
+                  value={country}
+                  onChange={e => setCountry(e.target.value)}
+                  required
+                  variant="standard"
+                  margin="normal"
+                  fullWidth
+                  disabled={isLoading}
+                  inputProps={{ minLength: 3, maxLength: 3 }}
+                />
+              </Grid>
+            </Grid>
+
+            <Grid container item md={12}>
+              <FormControl
+                component="fieldset"
+                className={classes.formControl}
+                required
+                fullWidth
+                disabled={isLoading}
+              >
+                <FormLabel component="legend">Enabled</FormLabel>
+
+                <RadioGroup
+                  aria-label="enabled"
+                  name="enabled"
+                  row
+                  value={enabled}
+                  onChange={e => {
+                    setEnabled(e.target.value);
+                  }}
+                >
+                  <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                  <FormControlLabel value="false" control={<Radio />} label="No" />
+                </RadioGroup>
+              </FormControl>
             </Grid>
 
             <Button variant="contained" color="primary" onClick={onFormSubmit} disabled={isLoading}>
