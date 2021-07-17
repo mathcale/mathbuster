@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import Radio from '@material-ui/core/Radio';
