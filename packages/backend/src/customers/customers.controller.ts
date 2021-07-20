@@ -60,7 +60,7 @@ export class CustomersController {
     return this.customersService.findAll({
       ...listCustomersFilterDto,
       limit:
-        listCustomersFilterDto.limit > 10 ? 10 : listCustomersFilterDto.limit,
+        listCustomersFilterDto.limit > 100 ? 100 : listCustomersFilterDto.limit,
     });
   }
 

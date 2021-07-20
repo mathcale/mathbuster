@@ -59,7 +59,7 @@ export class MoviesController {
 
     return this.moviesService.findAll({
       ...listMoviesFilterDto,
-      limit: listMoviesFilterDto.limit > 10 ? 10 : listMoviesFilterDto.limit,
+      limit: listMoviesFilterDto.limit > 100 ? 100 : listMoviesFilterDto.limit,
     });
   }
 
