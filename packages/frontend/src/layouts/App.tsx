@@ -17,6 +17,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MovieIcon from '@material-ui/icons/Movie';
 import PeopleIcon from '@material-ui/icons/People';
+import UpdateIcon from '@material-ui/icons/Update';
+import InfoIcon from '@material-ui/icons/Info';
 
 interface AppLayoutProps {
   children: JSX.Element;
@@ -139,6 +141,15 @@ export function AppLayout({ children }: AppLayoutProps) {
       case 'customers/[id]':
         title = 'Edit customer';
         break;
+      case 'rentals':
+        title = 'Rentals';
+        break;
+      case 'rentals/create':
+        title = 'Rent movie';
+        break;
+      case 'rentals/[id]':
+        title = 'Update rental';
+        break;
       default:
         title = pathname;
         break;
@@ -149,7 +160,10 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar /*, open && classes.appBarShift*/)}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -202,6 +216,28 @@ export function AppLayout({ children }: AppLayoutProps) {
               <ListItemText primary="Customers" />
             </ListItem>
           </Link>
+
+          <Link href="/rentals" passHref>
+            <ListItem button>
+              <ListItemIcon>
+                <UpdateIcon />
+              </ListItemIcon>
+
+              <ListItemText primary="Rentals" />
+            </ListItem>
+          </Link>
+
+          <Divider />
+
+          {/* <Link href="/about" passHref>
+            <ListItem button>
+              <ListItemIcon>
+                <InfoIcon />
+              </ListItemIcon>
+
+              <ListItemText primary="About" />
+            </ListItem>
+          </Link> */}
         </List>
       </Drawer>
 

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type { ListMoviesResponse } from '../../../typings/responses/ListMoviesResponse';
 
 const { API_URL } = process.env;
-const allowedPaginationLimits = [10, 25, 50];
+const allowedPaginationLimits = [10, 25, 50, 75, 100];
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +10,9 @@ export default async function handler(
 ) {
   const page = req.query.page && +req.query.page > 0 ? req.query.page : 1;
   const limit =
-    req.query.limit && +req.query.limit in allowedPaginationLimits ? req.query.limit : 10;
+    req.query.limit && allowedPaginationLimits.find(limit => +req.query.limit === limit)
+      ? req.query.limit
+      : 10;
 
   console.info(`api.movies.index: Fetching movies, page: ${page} / limit: ${limit}`);
 
